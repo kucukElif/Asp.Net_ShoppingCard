@@ -1,0 +1,36 @@
+﻿@model Cart
+
+
+
+    <div class="card my-4">
+        <h5 class="card-header"><span class="text-muted">Şipariş Özeti</span></h5>
+
+        <div class="card-body">
+            <ul class="list-group mb-3">
+                <li class="list-group-item d-flex justify-content-beetween">
+                    <div>
+                        <h6 class="my-0">Ürünleriniz</h6>
+                        @foreach (var item in Model.myCart)
+                        {
+                            <span>@item.Name</span>
+                            <small>x @item.Quantity</small>
+                            <br />
+                            <small class="text-muted">@item.SubTotal tl</small>
+                            <br />
+                            <br />
+                        }
+                    </div>
+                   
+                    </li>
+                <li class="list-group-item d-flex justify-content-beetween">
+                    <span>Toplam (Tl)</span>
+                    <strong>@Model.TotalPrice() tl</strong>
+                </li>
+            </ul>
+
+
+        </div>
+    </div>
+
+
+

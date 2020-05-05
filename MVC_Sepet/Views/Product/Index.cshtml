@@ -1,0 +1,44 @@
+﻿@model List<MVC_Sepet.Models.Context.Products>
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container">
+    <div class="row">
+        @if (TempData["cart"]!=null)
+        {
+            <div class="alert alert-success">
+                <span>@TempData["cart"]</span>
+            </div>
+        }
+       else if(TempData["emptyCart"] != null)
+	{
+            <div class="alert alert-warning">
+                <span>@TempData["emptyCart"]</span>
+            </div>
+	         
+	}
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Ürün Adı</th>
+                    <th>Fiyat</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var p in Model)
+                {
+                    <tr>
+                        <td>@p.ProductName</td>
+                        <td>@p.UnitPrice</td>
+                        <td>@Html.ActionLink("Sepete Ekle","AddToCart",new { id=p.ProductID},new { @class="btn btn-success"})</td>
+                    </tr>
+
+                }
+
+            </tbody>
+        </table>
+    </div>
+</div>

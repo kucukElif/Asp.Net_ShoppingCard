@@ -1,0 +1,77 @@
+﻿@model MVC_Sepet.Models.Cart
+@{
+    ViewBag.Title = "MyCart";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<h1 style="color:red">Sepetim</h1>
+<div class="row mt-5">
+    <div class="col-md-8">
+
+
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>Ürün</th>
+                    <th>Adet</th>
+                    <th>Fiyat</th>
+                    <th>Ara Toplam</th>
+                    <th></th>
+
+
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.myCart)
+                {
+                    <tr>
+                        <td>@item.Name</td>
+                        <td>@item.Quantity</td>
+                        <td>@item.Price Tl</td>
+                        <td>@item.SubTotal Tl</td>
+                        <td>
+                            @Html.ActionLink("Ürünü Çıkar", "DeleteFromCart", new { productId = item.ID }, new { @class = "btn btn-danger", onclick = "return confirm('Are you sure you want to delete??')" })
+                        </td>
+
+                    </tr>
+
+                }
+
+            </tbody>
+            </table>
+        </div>
+
+    </div>
+
+<div class="container">
+    <div class="row" style="margin-left:2px;">
+        <h4>Sepet Özeti</h4>
+    </div>
+    <table width="200">
+        <tbody>
+            <tr>
+                <th>Toplam Fiyat:</th>
+                <td>@Model.TotalPrice() Tl</td>
+
+            </tr>
+            <tr>
+                <th>Kargo:</th>
+                <td>Ücretsiz</td>
+            </tr>
+            <tr>
+                <th>Genel Toplam:</th>
+                <td>@Model.TotalPrice() Tl</td>
+            </tr>
+        </tbody>
+    </table>
+    <br />
+  
+        <a href="/Product/Adress" class="btn btn-primary"><i class="fas fa-arrow-circle-right"></i>Satın Al</a>
+   
+        <br />
+        <div class="text-center">
+            <a href="/Product/Index" class="btn btn-primary"><i class="demo-icon icon-reply"></i>Alışverişe Devam</a>
+        </div>
+    </div>
+
+
+

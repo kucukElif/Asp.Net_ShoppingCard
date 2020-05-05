@@ -1,0 +1,195 @@
+﻿
+@model OrderModel
+@{
+    ViewBag.Title = "Adress";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-8">
+
+            <h3 class="mb3">Bilgileriniz</h3>
+            <br />
+            <form action="/" method="post">
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label asp-for="@Model.FirstName">Adınız</label>
+                        <input asp-for="@Model.FirstName" value="" class="form-control" />
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+                        <label asp-for="@Model.LastName">Soyadınız</label>
+                        <input asp-for="@Model.LastName" value="" class="form-control" />
+                    </div>
+                </div>
+                <br />
+                <br />
+                <div class="mb-3">
+
+                    <label asp-for="@Model.Address">Adres</label>
+                    <textarea asp-for="@Model.Address" class="form-control"></textarea>
+
+
+                </div>
+                <br />
+                <br />
+                <div class="row">
+                    <div class="col-md-4 mb-3">
+
+                        <label asp-for="@Model.Email">Email</label>
+                        <input asp-for="@Model.Email" value="" class="form-control" />
+                    </div>
+
+                    <div class="col-md-4 mb-3">
+
+                        <label asp-for="@Model.Phone">Telefon No</label>
+                        <input asp-for="@Model.Phone" value="" class="form-control" />
+
+                    </div>
+                    <div class="col-md-4 mb-3">
+
+                        <label asp-for="@Model.City">Şehir</label>
+                        <input asp-for="@Model.City" value="" class="form-control" />
+
+                    </div>
+                </div>
+                <br />
+                <br />
+
+                <hr class="mb-4" />
+                <div class="custom-control custom-checkbox">
+                    <input type="checkbox" class="custom-control-input" id="save-info" />
+                    <label class="custom-control-label" for="save-info">Bilgilerimi kaydet</label>
+                </div>
+
+                <hr class="mb-4" />
+                <div class="visible-md-block my-3">
+                    <div class="custom-control custom-radio">
+                        <input id="credit" name="paymentMethod" type="radio" class="custom-control-input" checked="checked" />
+                        <<label class="custom-control-label" for="credit">Kredi Kartı</label>
+                    </div>
+                    <div class="custom-control custom-radio">
+                        <input id="paypal" name="paymentMethod" type="radio" class="custom-control-input" required="" />
+                        <label class="custom-control-label" for="paypal">EFT</label>
+
+                    </div>
+                </div>
+
+                <h4 class="mb-3">Ödeme</h4>
+                <br />
+                <br />
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+
+                        <label asp-for="@Model.CardName">Kart Üzerindeki İsim</label>
+                        <input asp-for="@Model.CardName" value="" class="form-control" />
+
+                    </div>
+                    <div class="col-md-6 mb-3">
+
+                        <label asp-for="@Model.CardNumber">IBAN No</label>
+                        <input asp-for="@Model.CardNumber" value="" class="form-control" />
+
+                    </div>
+                </div>
+                <br />
+                <br />
+                <div class="row">
+                    <div class="col-md-4 mb-3">
+
+                        <label asp-for="@Model.ExpirationMonth">Ay</label>
+                        <input asp-for="@Model.ExpirationMonth" value="" class="form-control" />
+
+                    </div>
+                    <div class="col-md-4 mb-3">
+
+                        <label asp-for="@Model.ExpirationYear">Yıl</label>
+                        <input asp-for="@Model.ExpirationYear" value="" class="form-control" />
+
+                    </div>
+
+                    <div class="col-md-4 mb-3">
+
+                        <label asp-for="@Model.CVV">Güvenlik Kodu</label>
+                        <input asp-for="@Model.CVV" value="" class="form-control" />
+
+                    </div>
+
+                </div>
+
+
+            </form>
+
+            <br />
+            <hr class="mb-4" />
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#Modal1"><i class="fas fa-arrow-circle-right"></i>Satın Al</button>
+            <div class="modal" id="Modal1">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h2 class="modal-title">Ödeme</h2>
+                        </div>
+                        <form method="post" action="/">
+                            <div class="modal-body">
+                                <label>
+                                    Ürünleriniz
+                                </label>
+                                <br />
+                                @foreach (var item in Model.Cart.myCart)
+                                {
+                                    <span>@item.Name</span>
+                                    <small>x @item.Quantity</small>
+                                    <br />
+
+                                }
+
+
+
+                                <small class="text-muted">@Model.Cart.TotalPrice() tl</small>
+                                <hr />
+                                <label>Müşteri</label>
+                                <span>@Model.FirstName @Model.LastName</span>
+                                <br />
+
+                                <label>Adres</label>
+
+                                <span>Papatya Sok. No:36 Daire:8 Kat:5 Bostancı Mah Kadıköy/İstanbul</span>
+
+
+                                <hr />
+
+                                <button type="submit" class="btn btn-info" id="success">Ödeme Yap</button>
+
+                                <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+            </div>
+
+            <br />
+            <br />
+
+        </div>
+        <div class="col-md-4">
+            @Html.Action("_PartialOrder")
+        </div>
+
+    </div>
+</div>
+
+<script>
+
+    var odeme = document.getElementById("success");
+    odeme.onclick = function () {
+        window.alert("Ödeme başarıyla gerçekleşmiştir");
+    }
+</script>
+
+
+
+
+
